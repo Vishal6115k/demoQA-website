@@ -11,7 +11,8 @@ export class Forms extends BasePage
     private readonly dateOfBirth:string="#dateOfBirthInput";
     private readonly subjects:string="#subjectsInput";
     private readonly Subjects:string="//div//input[@id='subjectsInput']";
-    private readonly hobbies:string="//div//label[text()='Sports']";
+   // private readonly hobbies:string="//div//label[text()='Sports']";
+
     private readonly currentAddress:string="#currentAddress";
     private readonly submitButton:string="#submit";
     private readonly fileUpload:string="#uploadPicture";
@@ -33,7 +34,8 @@ export class Forms extends BasePage
         await this.page.keyboard.press("ArrowDown");
         await this.page.keyboard.press("Enter");
         await this.page.waitForTimeout(5000);
-        await this.page.locator(this.hobbies).click();
+        //await this.page.locator(this.hobbies).click();
+        await this.page.getByText("Sports").click();
         await this.page.locator(this.currentAddress).fill("pune");
          await this.page.waitForTimeout(2000);
        /*await this.page.locator("//div[@class='css-hlgwow']//div[text()='Select State']").click();
