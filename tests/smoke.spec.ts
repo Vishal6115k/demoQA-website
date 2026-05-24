@@ -30,4 +30,5 @@ test.skip("verify the user can click on windows", async () => {
     await windows.openUrl();
     await windows.windowsFunction();
     expect(element.page.url()).toBe("https://demoqa.com/browser-windows");
+    console.log ("The current URL is: " + element.page.url());
 });
