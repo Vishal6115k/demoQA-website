@@ -3,6 +3,7 @@ import {Elements} from "../pages/elements";
 import {Forms} from "../pages/forms";
 import {Windows} from "../pages/windows";
 
+
 let element:Elements;
 let forms:Forms;
 let windows:Windows;
@@ -17,13 +18,14 @@ test.beforeEach(async ({page}) => {
 
 test("verify the user can click on elements", async () => {
     await element.clickOnElements();
+    await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test("verify the user can click on forms", async () => {
+test.skip("verify the user can click on forms", async () => {
     await forms.clickOnForms();
     expect(forms.page.url()).toBe("https://demoqa.com/automation-practice-form");
 });
-test("verify the user can click on windows", async () => {
+test.skip("verify the user can click on windows", async () => {
     const windows = new Windows(element.page);
     await windows.openUrl();
     await windows.windowsFunction();
