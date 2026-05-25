@@ -9,6 +9,7 @@ export class Elements extends BasePage {
     private readonly checBox: string = "//span[text()='Check Box']";
     private readonly radio: string = "//span[text()='Radio Button']";
     private readonly button: string = "//span[text()='Buttons']";
+    private readonly table: string = "//span[text()='Web Tables']";
     private readonly FullName: string = "#userName";
     private readonly Email: string =  "#userEmail";
     private readonly CurrentAddress: string =  "#currentAddress";
@@ -67,6 +68,24 @@ export class Elements extends BasePage {
                 await this.page.waitForTimeout(3000);
                 await this.page.getByText('Double Click Me').dblclick();    
                 await this.page.waitForTimeout(5000);
+            }
+            public async addRecord()
+            {
+                await this.page.click(this.element);
+                await this.page.locator(this.table).click();
+                await this.page.waitForTimeout(2000);
+                await this.page.locator("//button[@id='addNewRecordButton']").scrollIntoViewIfNeeded;
+                   await this.page.locator("//button[@id='addNewRecordButton']").click();
+                await this.page.locator("#firstName").fill("John");
+                await this.page.locator("#lastName").fill("Doe");
+                await this.page.locator("#userEmail").fill("john.doe@example.com");
+                await this.page.locator("#age").fill("30");
+                await this.page.locator("#salary").fill("50000");
+                await this.page.locator("#department").fill("Engineering");
+                await this.page.locator("#submit").click();
+                await this.page.waitForTimeout(5000);
+
+                
             }
 
 }
