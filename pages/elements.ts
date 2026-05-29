@@ -88,4 +88,23 @@ export class Elements extends BasePage {
                 
             }
 
+            public async readData()
+            {
+                 await this.page.click(this.element);
+                await this.page.locator(this.table).click();
+                await this.page.waitForTimeout(2000);
+              let values =  await this.page.locator("//table[@class='-striped -highlight table table-striped table-bordered table-hover']//thead//tr//th").allTextContents();
+              console.log(values[0] +" , "+values[4]);
+              for (let i = 0; i < values.length; i++) 
+                {
+                    let tvalue  = await this.page.locator("//table[@class='-striped -highlight table table-striped table-bordered table-hover']//tbody//tr["+i+"]//td").allTextContents();
+if(parseInt(tvalue[4])>=10000)
+{
+                    console.log(tvalue[0] +" , "+tvalue[4]);
+}
+
+
+            }
+
+}
 }
