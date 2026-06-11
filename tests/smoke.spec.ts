@@ -17,46 +17,46 @@ test.beforeEach(async ({page}) => {
     
 });
 
-test.skip("verify the user can click on elements", async () => {
+test("verify the user can click on elements", async () => {
 
     await element.testBox();
     await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on forms", async () => {
+test("verify the user can click on forms", async () => {
     await forms.clickOnForms();
     expect(forms.page.url()).toBe("https://demoqa.com/automation-practice-form");
 });
-test.skip("verify the user can click on textbox", async () => {
+test("verify the user can click on textbox", async () => {
 
     await element.testBox();
       await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on checkbox", async () => {
+test("verify the user can click on checkbox", async () => {
 
     await element.checkBox();
     expect(await element.page.locator("//div[@id='result']//span[text()='desktop']")).toBeVisible();
     //expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on radio button", async () => {
+test("verify the user can click on radio button", async () => {
 
     await element.radioButton();
     expect(await element.page.locator("//p[text()='You have selected ']")).toBeVisible();
     });
-test.skip("verify the user can click on buttons", async () => {
+test("verify the user can click on buttons", async () => {
 
     await element.Buttons();
     expect(await element.page.locator("//p[text()='You have done a double click']")).toBeVisible();
     });
     
-test.skip("verify the user can click on windows", async () => {
+test("verify the user can click on windows", async () => {
 
     await windows.windowsFunction();
     expect(element.page.url()).toBe("https://demoqa.com/browser-windows");
     console.log ("The current URL is: " + element.page.url());
 });
-test.skip("verify the user can add new record", async () => {
+test("verify the user can add new record", async () => {
  
     await element.addRecord();
    // expect(await element.page.locator("//div[@class='rt-tbody']//div[@class='rt-tr-group'][1]//div[@class='rt-td'][1]")).toBeVisible(); 
@@ -64,4 +64,8 @@ test.skip("verify the user can add new record", async () => {
 test("reading the data", async () => {
  
     await element.readData();
+   });
+test("working with links", async () => {
+ 
+    await element.clickOnLinks();
    });

@@ -15,6 +15,7 @@ export class Elements extends BasePage {
     private readonly CurrentAddress: string =  "#currentAddress";
     private readonly PermanentAddress: string ="#permanentAddress";
     private readonly submitButton: string = "#submit";
+    private readonly links: string = "//span[text()='Links']";
 
    
     public async testBox() {
@@ -106,5 +107,27 @@ if(parseInt(tvalue[4])>=10000)
 
             }
 
+}
+public async clickOnLinks()
+{
+    await this.page.click(this.element);
+     await this.page.waitForTimeout(3000);
+    await this.page.locator(this.links).click();
+    
+    
+    let pagePromise= this.page.context().waitForEvent('page');
+    await this.page.locator("//a[@id='simpleLink']").click();
+    
+    let page2 = await pagePromise;
+    
+   // await this.page.locator("//div//h5[text()='Elements']").waitFor({ state: 'visible'});
+    
+    await page2.locator("//div//h5[text()='Elements']").click();
+    
+    console.log(await page2.url());
+    await this.page.bringToFront();
+     await this.page.waitForTimeout(3000);
+     await this.page.locator(this.textBox).click();
+     await this.page.waitForTimeout(3000);
 }
 }
