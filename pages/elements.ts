@@ -16,6 +16,7 @@ export class Elements extends BasePage {
     private readonly PermanentAddress: string ="#permanentAddress";
     private readonly submitButton: string = "#submit";
     private readonly links: string = "//span[text()='Links']";
+    private readonly upload: string = "//span[text()='Upload and Download']";
 
    
     public async testBox() {
@@ -129,5 +130,17 @@ public async clickOnLinks()
      await this.page.waitForTimeout(3000);
      await this.page.locator(this.textBox).click();
      await this.page.waitForTimeout(3000);
+     await page2.bringToFront();
+     await this.page.waitForTimeout(3000);
+}
+
+public async fileUpload()
+{
+    await this.page.click(this.element);
+    await this.page.waitForTimeout(3000);
+    await this.page.locator(this.upload).click();
+    await this.page.waitForTimeout(3000);
+    await this.page.locator('//input[@id=\'uploadFile\']').setInputFiles('C:\\Users\\vishal\\Desktop\\Playwright\\allurereport.txt');
+    await this.page.waitForTimeout(3000);
 }
 }
