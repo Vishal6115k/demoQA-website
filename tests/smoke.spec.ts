@@ -74,3 +74,10 @@ test.skip("working with links", async () => {
     await element.fileUpload();
     expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
+   test("downloading the file", async () => {
+ 
+    await element.fileDownload();
+    expect(await element.page.locator("//a[@id='downloadButton']")).toBeVisible();
+   
+   });
+   

@@ -17,6 +17,7 @@ export class Elements extends BasePage {
     private readonly submitButton: string = "#submit";
     private readonly links: string = "//span[text()='Links']";
     private readonly upload: string = "//span[text()='Upload and Download']";
+    private readonly download: string = "//span[text()='Upload and Download']";
 
    
     public async testBox() {
@@ -141,6 +142,18 @@ public async fileUpload()
     await this.page.locator(this.upload).click();
     await this.page.waitForTimeout(3000);
     await this.page.locator('//input[@id=\'uploadFile\']').setInputFiles('C:\\Users\\vishal\\Desktop\\Playwright\\allurereport.txt');
-    await this.page.waitForTimeout(3000);
+  
 }
+public async fileDwnload()
+{
+    await this.page.click(this.element);  
+    await this.page.waitForTimeout(3000);    
+    await this.page.locator(this.download).click();
+    let pagePromise = this.page.context().waitForEvent('download');  
+    await this.page.locator('#downloadButton').click();   
+    let download = await pagePromise;     
+    await download.saveAs(`C:\\Users\\vishal\\Desktop\\Playwright\\${"downloadedFile.jpeg"}`);
+ await this.page.waitForTimeout(3000); 
+}
+
 }
