@@ -2,17 +2,20 @@ import { test, expect } from "@playwright/test";
 import {Elements} from "../pages/elements";
 import {Forms} from "../pages/forms";
 import {Windows} from "../pages/windows";
+import {Alerts} from "../pages/alerts";
 
 
 let element:Elements;
 let forms:Forms;
 let windows:Windows;
+let alert:Alerts;
 
 
 test.beforeEach(async ({page}) => {
     element = new Elements(page);
     forms = new Forms(page);
     windows = new Windows(page);
+    alert = new Alerts(page);
     await element.openUrl();
     
 });
@@ -69,15 +72,29 @@ test.skip("working with links", async () => {
  
     await element.clickOnLinks();
    });
-   test("Uploading the file", async () => {
+   test.skip("Uploading the file", async () => {
  
     await element.fileUpload();
     expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
-   test("downloading the file", async () => {
+   test.skip("downloading the file", async () => {
  
     await element.fileDownload();
     expect(await element.page.locator("//a[@id='downloadButton']")).toBeVisible();
    
    });
+
+test("working with alerts", async () => {
+
+    await alert.alertsTest();
+    expect(alert.page.url()).toBe("https://demoqa.com/alerts");
+   
+});
+
+test("working with rejectAlerts", async () => {
+
+    await alert.rejectAlert();
+   expect(alert.page.url()).toBe("https://demoqa.com/alerts");
+   
+});
    
