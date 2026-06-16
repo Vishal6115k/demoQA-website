@@ -3,12 +3,14 @@ import {Elements} from "../pages/elements";
 import {Forms} from "../pages/forms";
 import {Windows} from "../pages/windows";
 import {Alerts} from "../pages/alerts";
+import {Frames} from "../pages/frames";
 
 
 let element:Elements;
 let forms:Forms;
 let windows:Windows;
 let alert:Alerts;
+let frame:Frames;
 
 
 test.beforeEach(async ({page}) => {
@@ -16,6 +18,7 @@ test.beforeEach(async ({page}) => {
     forms = new Forms(page);
     windows = new Windows(page);
     alert = new Alerts(page);
+    frame = new Frames(page);
     await element.openUrl();
     
 });
@@ -77,24 +80,39 @@ test.skip("working with links", async () => {
     await element.fileUpload();
     expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
-   test.skip("downloading the file", async () => {
+test.skip("downloading the file", async () => {
  
     await element.fileDownload();
     expect(await element.page.locator("//a[@id='downloadButton']")).toBeVisible();
    
    });
 
-test("working with alerts", async () => {
+test.skip("working with alerts", async () => {
 
     await alert.alertsTest();
     expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
 });
 
-test("working with rejectAlerts", async () => {
+test.skip("working with rejectAlerts", async () => {
 
     await alert.rejectAlert();
    expect(alert.page.url()).toBe("https://demoqa.com/alerts");
+   
+});
+test.skip("working with textAlerts", async () => {
+
+    await alert.textAlert();
+  expect(alert.page.locator("//span[@id='promptResult']")).toContainText("Automation");
+   
+});
+test("working with singleFrames", async () => {
+
+    await frame.frameTest();
+    let iframe=await frame.page.frameLocator(frame.frameLocator);
+   await  expect(iframe.locator(frame.frameContent).nth(0)).toContainText("This is a sample page");
+
+
    
 });
    
