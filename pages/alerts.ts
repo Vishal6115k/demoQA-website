@@ -1,6 +1,6 @@
 import { BasePage } from "./Basepage";
 
-let a:string
+
 export class Alerts extends BasePage {
 
 private readonly alerts: string= "//div//h5[text()='Alerts, Frame & Windows']";

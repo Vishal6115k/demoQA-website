@@ -4,6 +4,7 @@ import {Forms} from "../pages/forms";
 import {Windows} from "../pages/windows";
 import {Alerts} from "../pages/alerts";
 import {Frames} from "../pages/frames";
+import {Dates} from "../pages/dates";
 
 
 let element:Elements;
@@ -11,7 +12,7 @@ let forms:Forms;
 let windows:Windows;
 let alert:Alerts;
 let frame:Frames;
-
+let dates:Dates;
 
 test.beforeEach(async ({page}) => {
     element = new Elements(page);
@@ -19,6 +20,7 @@ test.beforeEach(async ({page}) => {
     windows = new Windows(page);
     alert = new Alerts(page);
     frame = new Frames(page);
+    dates = new Dates(page);
     await element.openUrl();
     
 });
@@ -106,13 +108,22 @@ test.skip("working with textAlerts", async () => {
   expect(alert.page.locator("//span[@id='promptResult']")).toContainText("Automation");
    
 });
-test("working with singleFrames", async () => {
+test.skip("working with singleFrames", async () => {
 
     await frame.frameTest();
     let iframe=await frame.page.frameLocator(frame.frameLocator);
    await  expect(iframe.locator(frame.frameContent).nth(0)).toContainText("This is a sample page");
+   
+});
 
+test.skip("working with dates", async () => {
 
+    await dates.dateTest();
+   
+});
+test("working with date AndTime", async () => {
+
+    await dates.timeTest();
    
 });
    
