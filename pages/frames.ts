@@ -2,6 +2,10 @@ import { BasePage } from "./Basepage";
 
 
 export class Frames extends BasePage {
+  async verifyPageLoaded(): Promise<void> {
+        await this.page.locator("//div//h5[text()='Alerts, Frame & Windows']").waitFor();
+        console.log("Frames page loaded");
+    }
 private readonly frame: string= "//div//h5[text()='Alerts, Frame & Windows']";
 private readonly frameButton: string = "//span[text()='Frames']";
 public readonly frameLocator: string = "//iframe[@id='frame1']";

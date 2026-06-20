@@ -2,7 +2,9 @@ import { BasePage } from "./Basepage";
 
 
 export class Alerts extends BasePage {
-
+  async verifyPageLoaded(): Promise<void> {
+        await this.page.locator("//div//h5[text()='Alerts, Frame & Windows']").waitFor();
+    }
 private readonly alerts: string= "//div//h5[text()='Alerts, Frame & Windows']";
 private readonly alertButton: string = "//span[text()='Alerts']";
 private readonly alert1: string = "//button[@id='alertButton']"

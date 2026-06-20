@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-export class BasePage {
+export abstract class BasePage {
 
      page: Page;
 
@@ -11,4 +11,5 @@ export class BasePage {
     async openUrl() {
         await this.page.goto("https://demoqa.com/");
     }
+    abstract verifyPageLoaded(): Promise<void>;
 }

@@ -2,6 +2,11 @@ import { BasePage } from "./Basepage";
 
 
 export class Dates extends BasePage { 
+    async verifyPageLoaded(): Promise<void> {
+        await this.page.locator("//div//h5[text()='Widgets']").waitFor();
+        console.log("dates page loaded");
+    }
+
 private readonly widgets: string= "//div//h5[text()='Widgets']";
 private readonly datepicker: string= "//span[text()='Date Picker']";
 private readonly time: string= "//input[@id='dateAndTimePickerInput']";

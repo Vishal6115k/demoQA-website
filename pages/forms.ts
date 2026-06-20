@@ -1,6 +1,9 @@
 import {BasePage} from "./Basepage";
 export class Forms extends BasePage
  {
+   async verifyPageLoaded(): Promise<void> {
+        await this.page.locator("//div[@class='card-body']//h5[text()='Forms']").waitFor();
+    }
    private readonly forms:string= "//div[@class='card-body']//h5[text()='Forms']";
     private readonly practiceForm:string="//span[text()='Practice Form']";
     private readonly firstName:string="#firstName";

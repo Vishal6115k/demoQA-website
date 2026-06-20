@@ -26,6 +26,7 @@ test.beforeEach(async ({page}) => {
 });
 
 test.skip("verify the user can click on elements", async () => {
+    await element.verifyPageLoaded();
 
     await element.testBox();
     await element.fillFormUsingDBData();
@@ -78,7 +79,7 @@ test.skip("working with links", async () => {
     await element.clickOnLinks();
    });
    test.skip("Uploading the file", async () => {
- 
+    await element.verifyPageLoaded();
     await element.fileUpload();
     expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
@@ -90,7 +91,7 @@ test.skip("downloading the file", async () => {
    });
 
 test.skip("working with alerts", async () => {
-
+    await alert.verifyPageLoaded();
     await alert.alertsTest();
     expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
@@ -109,19 +110,19 @@ test.skip("working with textAlerts", async () => {
    
 });
 test.skip("working with singleFrames", async () => {
-
+    await frame.verifyPageLoaded();
     await frame.frameTest();
     let iframe=await frame.page.frameLocator(frame.frameLocator);
    await  expect(iframe.locator(frame.frameContent).nth(0)).toContainText("This is a sample page");
    
 });
 
-test.skip("working with dates", async () => {
-
+test("working with dates", async () => {
+    await dates.verifyPageLoaded();
     await dates.dateTest();
    
 });
-test("working with date AndTime", async () => {
+test.skip("working with date AndTime", async () => {
 
     await dates.timeTest();
    
