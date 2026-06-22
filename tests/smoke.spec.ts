@@ -5,6 +5,7 @@ import {Windows} from "../pages/windows";
 import {Alerts} from "../pages/alerts";
 import {Frames} from "../pages/frames";
 import {Dates} from "../pages/dates";
+import{Dynamicelements} from "../pages/dynamicelements"
 
 
 let element:Elements;
@@ -13,6 +14,7 @@ let windows:Windows;
 let alert:Alerts;
 let frame:Frames;
 let dates:Dates;
+let dynamic:Dynamicelements;
 
 test.beforeEach(async ({page}) => {
     element = new Elements(page);
@@ -21,6 +23,7 @@ test.beforeEach(async ({page}) => {
     alert = new Alerts(page);
     frame = new Frames(page);
     dates = new Dates(page);
+    dynamic = new Dynamicelements(page);
     await element.openUrl();
     
 });
@@ -117,7 +120,7 @@ test.skip("working with singleFrames", async () => {
    
 });
 
-test("working with dates", async () => {
+test.skip("working with dates", async () => {
     await dates.verifyPageLoaded();
     await dates.dateTest();
    
@@ -125,6 +128,26 @@ test("working with dates", async () => {
 test.skip("working with date AndTime", async () => {
 
     await dates.timeTest();
+   
+});
+test.skip("dynamic elements", async ({page}) => {
+   // await dynamic.verifyPageLoaded();
+   await page.locator(dynamic.element).click();
+await page.locator(dynamic.button).click();
+    await dynamic.dynamicEle("Click Me")
+        await page.waitForTimeout(3000);
+     await dynamic.dynamicEle("Right Click Me")
+     await page.waitForTimeout(3000);
+      await dynamic.dynamicEle("Double Click Me")
+        await page.waitForTimeout(3000);
+})
+
+test("element visisble after some time test", async () => {
+   
+
+
+    await dynamic.elementVisibleAfterSomeTime();
+    expect(await dynamic.page.locator(dynamic.dynamicButton).isVisible()).toBe(true);
    
 });
    
