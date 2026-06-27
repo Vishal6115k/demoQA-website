@@ -3,6 +3,7 @@ export class Forms extends BasePage
  {
    async verifyPageLoaded(): Promise<void> {
         await this.page.locator("//div[@class='card-body']//h5[text()='Forms']").waitFor();
+        console.log("Forms page loaded");
     }
    private readonly forms:string= "//div[@class='card-body']//h5[text()='Forms']";
     private readonly practiceForm:string="//span[text()='Practice Form']";

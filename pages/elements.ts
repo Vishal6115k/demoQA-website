@@ -5,6 +5,7 @@ export class Elements extends BasePage {
 
      async verifyPageLoaded(): Promise<void> {
         await this.page.locator("//div[@class='card-body']//h5[text()='Elements']").waitFor();
+        console.log("Elements page loaded");
     }
     private readonly element: string =  "//div[@class='card-body']//h5[text()='Elements']";
     private readonly textBox: string = "//span[text()='Text Box']";
