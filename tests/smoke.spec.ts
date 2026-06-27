@@ -28,91 +28,91 @@ test.beforeEach(async ({page}) => {
     
 });
 
-test.skip("verify the user can click on elements", async () => {
+test("verify the user can click on elements", async () => {
     await element.verifyPageLoaded();
 
     await element.testBox();
     await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on forms", async () => {
+test("verify the user can click on forms", async () => {
     await forms.clickOnForms();
     expect(forms.page.url()).toBe("https://demoqa.com/automation-practice-form");
 });
-test.skip("verify the user can click on textbox", async () => {
+test("verify the user can click on textbox", async () => {
 
     await element.testBox();
       await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on checkbox", async () => {
+test("verify the user can click on checkbox", async () => {
 
     await element.checkBox();
     expect(await element.page.locator("//div[@id='result']//span[text()='desktop']")).toBeVisible();
     //expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
-test.skip("verify the user can click on radio button", async () => {
+test("verify the user can click on radio button", async () => {
 
     await element.radioButton();
     expect(await element.page.locator("//p[text()='You have selected ']")).toBeVisible();
     });
-test.skip("verify the user can click on buttons", async () => {
+test("verify the user can click on buttons", async () => {
 
     await element.Buttons();
     expect(await element.page.locator("//p[text()='You have done a double click']")).toBeVisible();
     });
     
-test.skip("verify the user can click on windows", async () => {
+test("verify the user can click on windows", async () => {
 
     await windows.windowsFunction();
     expect(element.page.url()).toBe("https://demoqa.com/browser-windows");
     console.log ("The current URL is: " + element.page.url());
 });
-test.skip("verify the user can add new record", async () => {
+test("verify the user can add new record", async () => {
  
     await element.addRecord();
    // expect(await element.page.locator("//div[@class='rt-tbody']//div[@class='rt-tr-group'][1]//div[@class='rt-td'][1]")).toBeVisible(); 
 });
-test.skip("reading the data", async () => {
+test("reading the data", async () => {
  
     await element.readData();
    });
-test.skip("working with links", async () => {
+test("working with links", async () => {
  
     await element.clickOnLinks();
    });
-   test.skip("Uploading the file", async () => {
+   test("Uploading the file", async () => {
     await element.verifyPageLoaded();
     await element.fileUpload();
     expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
-test.skip("downloading the file", async () => {
+test("downloading the file", async () => {
  
     await element.fileDownload();
     expect(await element.page.locator("//a[@id='downloadButton']")).toBeVisible();
    
    });
 
-test.skip("working with alerts", async () => {
+test("working with alerts", async () => {
     await alert.verifyPageLoaded();
     await alert.alertsTest();
     expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
 });
 
-test.skip("working with rejectAlerts", async () => {
+test("working with rejectAlerts", async () => {
 
     await alert.rejectAlert();
    expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
 });
-test.skip("working with textAlerts", async () => {
+test("working with textAlerts", async () => {
 
     await alert.textAlert();
   expect(alert.page.locator("//span[@id='promptResult']")).toContainText("Automation");
    
 });
-test.skip("working with singleFrames", async () => {
+test("working with singleFrames", async () => {
     await frame.verifyPageLoaded();
     await frame.frameTest();
     let iframe=await frame.page.frameLocator(frame.frameLocator);
@@ -120,17 +120,17 @@ test.skip("working with singleFrames", async () => {
    
 });
 
-test.skip("working with dates", async () => {
+test("working with dates", async () => {
     await dates.verifyPageLoaded();
     await dates.dateTest();
    
 });
-test.skip("working with date AndTime", async () => {
+test("working with date AndTime", async () => {
 
     await dates.timeTest();
    
 });
-test.skip("dynamic elements", async ({page}) => {
+test("dynamic elements", async ({page}) => {
    // await dynamic.verifyPageLoaded();
    await page.locator(dynamic.element).click();
 await page.locator(dynamic.button).click();
@@ -142,10 +142,7 @@ await page.locator(dynamic.button).click();
         await page.waitForTimeout(3000);
 })
 
-test.skip("element visisble after some time test", async () => {
-   
-
-
+test("element visisble after some time test", async () => {
     await dynamic.elementVisibleAfterSomeTime();
     expect(await dynamic.page.locator(dynamic.visibleButton).isVisible()).toBe(true);
    
