@@ -42,7 +42,7 @@ public async timeTest()
       
           await this.page.locator
          ("//div[@class='react-datepicker__time-box']//ul[@role='listbox']//li[text()='01:30']").click();
-         await this.page.pause()
+         //await this.page.pause()
         
     }
 
