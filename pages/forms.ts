@@ -51,7 +51,7 @@ export class Forms extends BasePage
         await this.page.keyboard.press("ArrowDown");
         await this.page.keyboard.press("Enter");
          await this.page.waitForTimeout(3000); */
-         await this.page.locator(this.fileUpload).setInputFiles("C:\\Users\\vishal\\Desktop\\Personal\\test.png");;
+         await this.page.locator(this.fileUpload).setInputFiles('test-data//test.png');;
        
        
         await this.page.waitForTimeout(2000);
