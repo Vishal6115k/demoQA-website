@@ -62,8 +62,8 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: Playwright Automation Report - ${{ job.status }}
           to: ${{ secrets.EMAIL_TO }}
-          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
-          html_body: |
+         from: QA Team <${{ secrets.EMAIL_USERNAME }}>
+        html_body: |
             <h2>Playwright Automation Execution</h2>
 
             <b>Repository:</b> ${{ github.repository }}<br>
