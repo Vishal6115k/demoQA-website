@@ -144,7 +144,7 @@ public async fileUpload()
     await this.page.waitForTimeout(3000);
     await this.page.locator(this.upload).click();
     await this.page.waitForTimeout(3000);
-    await this.page.locator('//input[@id=\'uploadFile\']').setInputFiles('C:\\Users\\vishal\\Desktop\\Playwright\\allurereport.txt');
+    await this.page.locator('//input[@id=\'uploadFile\']').setInputFiles('test-data//test.png');
   
 }
 public async fileDownload()

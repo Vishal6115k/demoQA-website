@@ -48,8 +48,9 @@ test("verify the user can click on textbox", async () => {
 test("verify the user can click on checkbox", async () => {
 
     await element.checkBox();
-    expect(await element.page.locator("//div[@id='result']//span[text()='desktop']")).toBeVisible();
+    //expect(await element.page.locator("//div[@id='result']//span[text()='desktop']")).toBeVisible();
     //expect(element.page.url()).toBe("https://demoqa.com/text-box");
+    await expect(element.page.getByLabel('Select Home')).toBeChecked();
 });
 test("verify the user can click on radio button", async () => {
 
