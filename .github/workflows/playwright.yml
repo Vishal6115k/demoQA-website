@@ -38,6 +38,10 @@ jobs:
 
       - name: Run Playwright Tests
         run: npx playwright test
+        
+      - name: Generate Test Summary
+        if: always()
+        run: node scripts/report-summary.js
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
