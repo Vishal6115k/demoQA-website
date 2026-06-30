@@ -1,31 +1,83 @@
 name: Playwright Tests
+
 on:
- workflow_dispatch:
+  workflow_dispatch:
 
   schedule:
     - cron: '0 18 * * *'
+
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
+
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright Tests
+        run: npx playwright test
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Send Email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Playwright Automation Report - ${{ job.status }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+          html_body: |
+            <h2>Playwright Automation Execution</h2>
+
+            <b>Repository:</b> ${{ github.repository }}<br>
+            <b>Branch:</b> ${{ github.ref_name }}<br>
+            <b>Status:</b> ${{ job.status }}<br>
+            <b>Workflow:</b> ${{ github.workflow }}<br>
+
+            <br>
+
+            <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">
+              View GitHub Action Run
+            </a>
+
+            <br><br>
+
+            The Playwright HTML Report has been uploaded as a workflow artifact.
+
+            <br><br>
+
+            Regards,<br>
+           QA Team
