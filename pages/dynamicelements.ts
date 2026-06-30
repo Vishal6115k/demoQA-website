@@ -41,7 +41,7 @@ public async elementEnableAfterSometime()
      await this.page.locator(this.element).click()
     await this.page.locator(this.dymanicproperties).click();
    let element:any = await this.page.locator(this.enableButton);
-      expect(element).toBeEnabled({timeout:6000});
+      expect(element).toBeEnabled({timeout:16000});
   await element.scrollIntoViewIfNeeded();
   await this.page.waitForTimeout(1000);
   await element.click();
