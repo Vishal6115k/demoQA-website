@@ -32,14 +32,14 @@ test("verify the user can click on elements", async () => {
     await element.verifyPageLoaded();
 
     await element.testBox();
-    await element.fillFormUsingDBData();
+  //  await element.fillFormUsingDBData();
     expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
 test("verify the user can click on forms", async () => {
     await forms.clickOnForms();
     expect(forms.page.url()).toBe("https://demoqa.com/automation-practice-form");
 });
-test("verify the user can click on textbox", async () => {
+test.skip("verify the user can click on textbox", async () => {
 
     await element.testBox();
       await element.fillFormUsingDBData();

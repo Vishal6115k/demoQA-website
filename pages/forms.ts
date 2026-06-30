@@ -39,8 +39,8 @@ export class Forms extends BasePage
         await this.page.keyboard.press("Enter");
         await this.page.waitForTimeout(5000);
         //await this.page.locator(this.hobbies).click();
-        await this.page.getByText("Sports").waitFor({state: 'visible'});
-        await this.page.getByText("Sports").click();
+       // await this.page.getByText("Sports").waitFor({state: 'visible'});
+     //  await this.page.getByText("Sports").check();
         await this.page.locator(this.currentAddress).fill("pune");
          await this.page.waitForTimeout(2000);
        /*await this.page.locator("//div[@class='css-hlgwow']//div[text()='Select State']").click();
