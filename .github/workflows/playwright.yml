@@ -52,7 +52,7 @@ jobs:
           retention-days: 30
 
       - name: Send Email
-        if: always()
+        if: ${{ always() }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -62,7 +62,7 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: Playwright Automation Report - ${{ job.status }}
           to: ${{ secrets.EMAIL_TO }}
-         from: QA Team <${{ secrets.EMAIL_USERNAME }}>
+         from: "${{ secrets.EMAIL_USERNAME }}"
         html_body: |
             <h2>Playwright Automation Execution</h2>
 
