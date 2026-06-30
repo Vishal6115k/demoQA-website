@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { DBHelper } from '../utils/DBHelper';
+import { DBHelper } from '../utils/dbHelper';
 
 test('Fetch data from PostgreSQL', async () => {
 
