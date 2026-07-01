@@ -30,11 +30,10 @@ jobs:
       - name: Debug JSON Report
         if: always()
         run: |
-          echo "===== Files ====="
-          find . -name "*.json"
+          ls -R test-results
 
-          echo ""
-          echo "===== Playwright JSON Report ====="
+          echo "========================"
+
           cat test-results/results.json
       - name: Generate Test Summary
         if: always()
