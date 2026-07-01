@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Dependencies
         run: npm ci
@@ -24,20 +24,34 @@ jobs:
 
       - name: Run Playwright Tests
         id: tests
-        run: |
-          npx playwright test
         continue-on-error: true
+        run: |
+          npx playwright test \
+            --reporter=line,json,html
 
       - name: Generate Test Summary
         if: always()
         run: |
-          PASSED=$(grep -oP '(?<=passed )[0-9]+' playwright-report/index.html | head -1 || echo 0)
-          FAILED=$(grep -oP '(?<=failed )[0-9]+' playwright-report/index.html | head -1 || echo 0)
-          SKIPPED=$(grep -oP '(?<=skipped )[0-9]+' playwright-report/index.html | head -1 || echo 0)
+          RESULT_FILE=$(find . -name "*.json" | grep -E "playwright|test-results|results" | head -1)
+
+          if [ -z "$RESULT_FILE" ]; then
+            echo "Could not find Playwright JSON report."
+            echo "PASSED=0" >> $GITHUB_ENV
+            echo "FAILED=0" >> $GITHUB_ENV
+            echo "SKIPPED=0" >> $GITHUB_ENV
+            echo "TOTAL=0" >> $GITHUB_ENV
+            exit 0
+          fi
+
+          PASSED=$(jq '[.. | objects | select(.status?=="passed")] | length' "$RESULT_FILE")
+          FAILED=$(jq '[.. | objects | select(.status?=="failed")] | length' "$RESULT_FILE")
+          SKIPPED=$(jq '[.. | objects | select(.status?=="skipped")] | length' "$RESULT_FILE")
+          TOTAL=$((PASSED + FAILED + SKIPPED))
 
           echo "PASSED=$PASSED" >> $GITHUB_ENV
           echo "FAILED=$FAILED" >> $GITHUB_ENV
           echo "SKIPPED=$SKIPPED" >> $GITHUB_ENV
+          echo "TOTAL=$TOTAL" >> $GITHUB_ENV
 
       - name: Upload Playwright Report
         if: always()
@@ -55,21 +69,27 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Playwright Test Execution Report
 
-          to: surabhi61115@gmail.com, vishal.usei@gmail.com
+          subject: Playwright Automation Test Report
+
+          to: |
+            surabhi61115@gmail.com
+            vishal.usei@gmail.com
+
           from: GitHub Actions
 
           html_body: |
-            <h2>Automation Report</h2>
+            <h2>Playwright Automation Test Report</h2>
 
-            <table border="1" cellpadding="8" cellspacing="0">
-              <tr>
-                <th>Total Passed</th>
-                <th>Total Failed</th>
-                <th>Total Skipped</th>
+            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse;">
+              <tr style="background-color:#f2f2f2;">
+                <th>Total</th>
+                <th>Passed</th>
+                <th>Failed</th>
+                <th>Skipped</th>
               </tr>
-              <tr>
+              <tr align="center">
+                <td>${{ env.TOTAL }}</td>
                 <td>${{ env.PASSED }}</td>
                 <td>${{ env.FAILED }}</td>
                 <td>${{ env.SKIPPED }}</td>
@@ -78,10 +98,11 @@ jobs:
 
             <br>
 
-            Repository: ${{ github.repository }}<br>
-            Branch: ${{ github.ref_name }}<br>
-            Workflow: ${{ github.workflow }}<br>
-            Run Number: ${{ github.run_number }}<br>
+            <b>Repository:</b> ${{ github.repository }}<br>
+            <b>Branch:</b> ${{ github.ref_name }}<br>
+            <b>Workflow:</b> ${{ github.workflow }}<br>
+            <b>Run Number:</b> ${{ github.run_number }}<br>
+            <b>Triggered By:</b> ${{ github.actor }}<br>
 
             <br>
 
