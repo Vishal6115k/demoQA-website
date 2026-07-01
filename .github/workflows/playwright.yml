@@ -26,8 +26,7 @@ jobs:
         id: tests
         continue-on-error: true
         run: |
-          npx playwright test \
-            --reporter=line,json,html
+          npx playwright test 
       - name: Debug JSON Report
         if: always()
         run: |
