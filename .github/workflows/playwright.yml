@@ -63,8 +63,7 @@ jobs:
           subject: Automation Report - ${{ job.status }}
           to: ${{ secrets.EMAIL_TO }}
           from: "${{ secrets.EMAIL_USERNAME }}"
-          html_body: |
-            <h2>Playwright Automation Execution</h2>
+          html_body_file: summary.html
 
             <b>Repository:</b> ${{ github.repository }}<br>
             <b>Branch:</b> ${{ github.ref_name }}<br>
