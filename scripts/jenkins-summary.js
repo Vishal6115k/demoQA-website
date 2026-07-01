@@ -23,7 +23,7 @@ console.log("Flaky  :", flaky);
 console.log("Total  :", total);
 
 const html = `
-<h2>Playwright Automation Report</h2>
+<h2>Test cases status</h2>
 
 <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
 <tr style="background:#f2f2f2">
