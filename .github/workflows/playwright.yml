@@ -60,7 +60,7 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Playwright Automation Report - ${{ job.status }}
+          subject: Automation Report - ${{ job.status }}
           to: ${{ secrets.EMAIL_TO }}
           from: "${{ secrets.EMAIL_USERNAME }}"
           html_body: |
