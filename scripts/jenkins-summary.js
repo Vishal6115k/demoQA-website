@@ -4,10 +4,46 @@ const report = JSON.parse(
     fs.readFileSync("test-results/results.json", "utf8")
 );
 
-const passed = report.stats.expected || 0;
-const failed = report.stats.unexpected || 0;
-const skipped = report.stats.skipped || 0;
-const flaky = report.stats.flaky || 0;
+let passed = 0;
+let failed = 0;
+let skipped = 0;
+let flaky = 0;
+
+function processSuite(suite) {
+    if (suite.specs) {
+        suite.specs.forEach(spec => {
+            spec.tests.forEach(test => {
+
+                // Look at the final outcome of the test
+                switch (test.outcome) {
+
+                    case "expected":
+                        passed++;
+                        break;
+
+                    case "unexpected":
+                        failed++;
+                        break;
+
+                    case "skipped":
+                        skipped++;
+                        break;
+
+                    case "flaky":
+                        flaky++;
+                        break;
+                }
+
+            });
+        });
+    }
+
+    if (suite.suites) {
+        suite.suites.forEach(processSuite);
+    }
+}
+
+report.suites.forEach(processSuite);
 
 const total = passed + failed + skipped + flaky;
 
@@ -28,11 +64,11 @@ const html = `
 <td style="color:green"><b>${passed}</b></td>
 <td style="color:red"><b>${failed}</b></td>
 <td>${skipped}</td>
-<td>${flaky}</td>
+<td style="color:orange"><b>${flaky}</b></td>
 </tr>
 </table>
 `;
 
 fs.writeFileSync("summary.html", html);
 
-console.log("summary.html generated");
+console.log("Summary generated");
