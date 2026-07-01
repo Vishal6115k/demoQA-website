@@ -28,7 +28,15 @@ jobs:
         run: |
           npx playwright test \
             --reporter=line,json,html
+      - name: Debug JSON Report
+        if: always()
+        run: |
+          echo "===== Files ====="
+          find . -name "*.json"
 
+          echo ""
+          echo "===== Playwright JSON Report ====="
+          cat test-results/results.json
       - name: Generate Test Summary
         if: always()
         run: |
