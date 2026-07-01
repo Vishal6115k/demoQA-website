@@ -57,11 +57,11 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: Playwright Test Execution Report
 
-          to: your_email@gmail.com
+          to: surabhi61115@gmail.com, vishal.usei@gmail.com
           from: GitHub Actions
 
           html_body: |
-            <h2>Playwright Test Execution Report</h2>
+            <h2>Automation Report</h2>
 
             <table border="1" cellpadding="8" cellspacing="0">
               <tr>
