@@ -1,10 +1,24 @@
-name: Playwright Automation Tests
+name: Playwright Tests
 
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: '0 18 * * *'
+
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
+
 jobs:
   test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: lts/*
 
       - name: Install Dependencies
         run: npm ci
@@ -23,51 +37,22 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        id: tests
-        continue-on-error: true
-        run: |
-          npx playwright test 
-      - name: Debug JSON Report
-        if: always()
-        run: |
-          ls -R test-results
-
-          echo "========================"
-
-          cat test-results/results.json
+        run: npx playwright test
+        
       - name: Generate Test Summary
         if: always()
-        run: |
-          RESULT_FILE=$(find . -name "*.json" | grep -E "playwright|test-results|results" | head -1)
-
-          if [ -z "$RESULT_FILE" ]; then
-            echo "Could not find Playwright JSON report."
-            echo "PASSED=0" >> $GITHUB_ENV
-            echo "FAILED=0" >> $GITHUB_ENV
-            echo "SKIPPED=0" >> $GITHUB_ENV
-            echo "TOTAL=0" >> $GITHUB_ENV
-            exit 0
-          fi
-
-          PASSED=$(jq '[.. | objects | select(.status?=="passed")] | length' "$RESULT_FILE")
-          FAILED=$(jq '[.. | objects | select(.status?=="failed")] | length' "$RESULT_FILE")
-          SKIPPED=$(jq '[.. | objects | select(.status?=="skipped")] | length' "$RESULT_FILE")
-          TOTAL=$((PASSED + FAILED + SKIPPED))
-
-          echo "PASSED=$PASSED" >> $GITHUB_ENV
-          echo "FAILED=$FAILED" >> $GITHUB_ENV
-          echo "SKIPPED=$SKIPPED" >> $GITHUB_ENV
-          echo "TOTAL=$TOTAL" >> $GITHUB_ENV
+        run: node scripts/report-summary.js
 
       - name: Upload Playwright Report
-        if: always()
         uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          name: Playwright-Report
+          name: playwright-report
           path: playwright-report/
+          retention-days: 30
 
       - name: Send Email
-        if: always()
+        if: ${{ always() }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -75,40 +60,16 @@ jobs:
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-
-          subject: Playwright Automation Test Report
-
-          to: |
-            surabhi61115@gmail.com
-            vishal.usei@gmail.com
-
-          from: GitHub Actions
-
+          subject: Playwright Automation Report - ${{ job.status }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: "${{ secrets.EMAIL_USERNAME }}"
           html_body: |
-            <h2>Playwright Automation Test Report</h2>
-
-            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse;">
-              <tr style="background-color:#f2f2f2;">
-                <th>Total</th>
-                <th>Passed</th>
-                <th>Failed</th>
-                <th>Skipped</th>
-              </tr>
-              <tr align="center">
-                <td>${{ env.TOTAL }}</td>
-                <td>${{ env.PASSED }}</td>
-                <td>${{ env.FAILED }}</td>
-                <td>${{ env.SKIPPED }}</td>
-              </tr>
-            </table>
-
-            <br>
+            <h2>Playwright Automation Execution</h2>
 
             <b>Repository:</b> ${{ github.repository }}<br>
             <b>Branch:</b> ${{ github.ref_name }}<br>
+            <b>Status:</b> ${{ job.status }}<br>
             <b>Workflow:</b> ${{ github.workflow }}<br>
-            <b>Run Number:</b> ${{ github.run_number }}<br>
-            <b>Triggered By:</b> ${{ github.actor }}<br>
 
             <br>
 
@@ -116,6 +77,11 @@ jobs:
               View GitHub Action Run
             </a>
 
-      - name: Fail Workflow if Tests Failed
-        if: steps.tests.outcome == 'failure'
-        run: exit 1
+            <br><br>
+
+            The Playwright HTML Report has been uploaded as a workflow artifact.
+
+            <br><br>
+
+            Regards,<br>
+            QA Team
