@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { config } from '../config/env';
+import { Environment } from '../config/env';
 
 test('Login Test', async ({ page }) => {
 
     // Open environment URL
-    await page.goto(config.baseURL);
+    await page.goto(Environment.baseURL);
 
-    console.log("Running on:", config.baseURL);
+    console.log("Running on:", Environment.baseURL);
 
 });

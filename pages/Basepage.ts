@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { Environment } from '../config/env';
 
 export abstract class BasePage {
 
@@ -9,7 +10,7 @@ export abstract class BasePage {
     }
 
     async openUrl() {
-        await this.page.goto("https://demoqa.com/");
+        await this.page.goto(Environment.baseURL);
     }
     abstract verifyPageLoaded(): Promise<void>;
 }

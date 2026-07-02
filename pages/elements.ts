@@ -1,5 +1,6 @@
 import { BasePage } from "./Basepage";
 import { DBHelper } from '../utils/dbHelper';
+import { Environment, testEnv } from '../config/env';
 
 export class Elements extends BasePage {
 
@@ -33,6 +34,8 @@ export class Elements extends BasePage {
 
     // DB Driven Form Fill
     public async fillFormUsingDBData() {
+        if(testEnv=='qa')
+        {
 
         const result = await DBHelper.executeQuery(
             'select * from "TextBox"'
@@ -48,6 +51,27 @@ export class Elements extends BasePage {
         await this.page.locator(this.PermanentAddress).fill(data.Permanent_Address);
      await this.page.locator(this.submitButton).click();
      await this.page.waitForTimeout(5000);
+     console.log(data.FullName);
+    }
+     if(testEnv=='uat')
+        {
+
+        const result = await DBHelper.executeQuery(
+            'select * from "TextBox"'
+        );
+
+        const data = result[1];
+
+        console.log(data);
+
+        await this.page.locator(this.FullName) .fill(data.FullName);
+        await this.page.locator(this.Email) .fill(data.Email);
+        await this.page.locator(this.CurrentAddress).fill(data.Address);
+        await this.page.locator(this.PermanentAddress).fill(data.Permanent_Address);
+     await this.page.locator(this.submitButton).click();
+     await this.page.waitForTimeout(5000);
+     console.log(data.FullName);
+    }
     }
 
     public async checkBox()
