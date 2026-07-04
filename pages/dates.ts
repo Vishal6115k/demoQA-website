@@ -19,9 +19,8 @@ await this.page.locator(this.datepicker).click();
 await this.page.locator("//input[@id='datePickerMonthYearInput']").click();
 await this.page.locator("//select[@class='react-datepicker__month-select']").selectOption({ label: "August" });
 await this.page.locator("//select[@class='react-datepicker__year-select']").selectOption({ label: "1994" });
-await this.page.waitForTimeout(5000);
 await this.page.getByLabel("Choose Monday, August 29th, 1994").click();
-await this.page.waitForTimeout(5000);
+
     }
 
 public async timeTest()

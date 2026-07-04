@@ -37,7 +37,7 @@ export class Forms extends BasePage
         await this.page.locator(this.Subjects).fill("Maths");
         await this.page.keyboard.press("ArrowDown");
         await this.page.keyboard.press("Enter");
-        await this.page.waitForTimeout(5000);
+        await this.page.waitForTimeout(3000);
         //await this.page.locator(this.hobbies).click();
        // await this.page.getByText("Sports").waitFor({state: 'visible'});
      //  await this.page.getByText("Sports").check();
