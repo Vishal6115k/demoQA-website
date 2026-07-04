@@ -33,7 +33,7 @@ test("verify the user can click on elements", async () => {
 
     await element.testBox();
   //  await element.fillFormUsingDBData();
-    expect(element.page.url()).toBe("https://demoqa.com/text-box");
+   await expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
 test("verify the user can click on forms", async () => {
     await forms.clickOnForms();
@@ -43,7 +43,7 @@ test("verify the user can click on textbox", async () => {
 
     await element.testBox();
       await element.fillFormUsingDBData();
-    expect(element.page.url()).toBe("https://demoqa.com/text-box");
+    await expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
 test("verify the user can click on checkbox", async () => {
 
@@ -55,12 +55,12 @@ test("verify the user can click on checkbox", async () => {
 test("verify the user can click on radio button", async () => {
 
     await element.radioButton();
-    expect(await element.page.locator("//p[text()='You have selected ']")).toBeVisible();
+   await expect(element.page.locator("//p[text()='You have selected ']")).toBeVisible();
     });
 test("verify the user can click on buttons", async () => {
 
     await element.Buttons();
-    expect(await element.page.locator("//p[text()='You have done a double click']")).toBeVisible();
+   await expect(element.page.locator("//p[text()='You have done a double click']")).toBeVisible();
     });
     
 test("verify the user can click on windows", async () => {
@@ -85,32 +85,32 @@ test("working with links", async () => {
    test("Uploading the file", async () => {
     await element.verifyPageLoaded();
     await element.fileUpload();
-    expect(await element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
+   await expect(element.page.locator("//p[@id='uploadedFilePath']")).toBeVisible();
    });
 test("downloading the file", async () => {
  
     await element.fileDownload();
-    expect(await element.page.locator("//a[@id='downloadButton']")).toBeVisible();
+  await  expect(element.page.locator("//a[@id='downloadButton']")).toBeVisible();
    
    });
 
 test("working with alerts", async () => {
     await alert.verifyPageLoaded();
     await alert.alertsTest();
-    expect(alert.page.url()).toBe("https://demoqa.com/alerts");
+    await expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
 });
 
 test("working with rejectAlerts", async () => {
 
     await alert.rejectAlert();
-   expect(alert.page.url()).toBe("https://demoqa.com/alerts");
+   await expect(alert.page.url()).toBe("https://demoqa.com/alerts");
    
 });
 test("working with textAlerts", async () => {
 
     await alert.textAlert();
-  expect(alert.page.locator("//span[@id='promptResult']")).toContainText("Automation");
+  await expect(alert.page.locator("//span[@id='promptResult']")).toContainText("Automation");
    
 });
 test("working with singleFrames", async () => {
@@ -145,13 +145,13 @@ await page.locator(dynamic.button).click();
 
 test("element visisble after some time test", async () => {
     await dynamic.elementVisibleAfterSomeTime();
-    expect(await dynamic.page.locator(dynamic.visibleButton).isVisible()).toBe(true);
+    await expect(dynamic.page.locator(dynamic.visibleButton).isVisible()).toBe(true);
    
 })
 test("element enable after some time test", async () => {
    
     await dynamic.elementEnableAfterSometime();
-    expect(await dynamic.page.locator(dynamic.enableButton).isVisible()).toBe(true);
+    await expect( dynamic.page.locator(dynamic.enableButton).isVisible()).toBe(true);
    
 });
    

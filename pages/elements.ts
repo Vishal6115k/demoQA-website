@@ -1,3 +1,4 @@
+import { test, expect } from "@playwright/test";
 import { BasePage } from "./Basepage";
 import { DBHelper } from '../utils/dbHelper';
 import { Environment, testEnv } from '../config/env';
@@ -28,8 +29,9 @@ export class Elements extends BasePage {
 
         await this.page.click(this.element);
 
+        await expect(this.page.locator(this.textBox)).toBeVisible();
         await this.page.locator(this.textBox).click();
-        await this.page.waitForTimeout(5000);
+       
     }
 
     // DB Driven Form Fill
@@ -50,7 +52,7 @@ export class Elements extends BasePage {
         await this.page.locator(this.CurrentAddress).fill(data.Address);
         await this.page.locator(this.PermanentAddress).fill(data.Permanent_Address);
      await this.page.locator(this.submitButton).click();
-     await this.page.waitForTimeout(5000);
+     await this.page.waitForTimeout(3000);
      console.log(data.FullName);
     }
      if(testEnv=='uat')
@@ -69,7 +71,7 @@ export class Elements extends BasePage {
         await this.page.locator(this.CurrentAddress).fill(data.Address);
         await this.page.locator(this.PermanentAddress).fill(data.Permanent_Address);
      await this.page.locator(this.submitButton).click();
-     await this.page.waitForTimeout(5000);
+     await this.page.waitForTimeout(3000);
      console.log(data.FullName);
     }
     }
@@ -78,15 +80,16 @@ export class Elements extends BasePage {
     {
          await this.page.click(this.element);
         await this.page.locator(this.checBox).click();
+        await expect(this.page.getByLabel('Select Home')).toBeVisible();
         await this.page.getByLabel('Select Home').click();
-         await this.page.waitForTimeout(5000);
+         
     }
             public async radioButton()
             {
                 await this.page.click(this.element);
                 await this.page.locator(this.radio).click();
                 await this.page.locator("//div[@class='col-auto form-check']//input[@id='yesRadio']").click();
-                await this.page.waitForTimeout(5000);
+                
             }
               public async Buttons()
             {
@@ -113,7 +116,7 @@ export class Elements extends BasePage {
                 await this.page.locator("#salary").fill("50000");
                 await this.page.locator("#department").fill("Engineering");
                 await this.page.locator("#submit").click();
-                await this.page.waitForTimeout(5000);
+              
 
                 
             }
@@ -140,7 +143,7 @@ if(parseInt(tvalue[4])>=10000)
 public async clickOnLinks()
 {
     await this.page.click(this.element);
-     await this.page.waitForTimeout(3000);
+    await expect(this.page.locator(this.links)).toBeVisible();
     await this.page.locator(this.links).click();
     
     
@@ -179,8 +182,8 @@ public async fileDownload()
     let pagePromise = this.page.context().waitForEvent('download');  
     await this.page.locator('#downloadButton').click();   
     let download = await pagePromise;     
-    await download.saveAs(`C:\\Users\\vishal\\Desktop\\Playwright\\${"downloadedFile.jpeg"}`);
- await this.page.waitForTimeout(3000); 
+    await download.saveAs(`test-data\\${"downloadedFile.jpeg"}`);
+ 
 }
 
 
