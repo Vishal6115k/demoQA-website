@@ -1,15 +1,15 @@
 import { Client } from 'pg';
-
+import { Environment } from '../config/env';
 export class DBHelper {
 
     static async executeQuery(query: string) {
 
         const client = new Client({
-            user: 'postgres',
-            host: 'localhost',
-            database: 'demoQA',
-            password: 'Surabhi@2021',
-            port: 5432
+             user: Environment.dbUser,
+             host: Environment.dbHost,
+             database: Environment.dbName,
+             password: Environment.dbPassword,
+             port: Environment.dbPort
         });
 
         await client.connect();
