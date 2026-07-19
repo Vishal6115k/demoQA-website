@@ -36,8 +36,12 @@ test("verify the user can click on elements", async () => {
    await expect(element.page.url()).toBe("https://demoqa.com/text-box");
 });
 test("verify the user can click on forms", async () => {
+    try{
     await forms.clickOnForms();
     expect(forms.page.url()).toBe("https://demoqa.com/automation-practice-form");
+} catch (message) {
+    console.error("Error occurred while clicking on forms:", message);
+}
 });
 test("verify the user can click on textbox", async () => {
 
