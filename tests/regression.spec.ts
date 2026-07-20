@@ -147,15 +147,30 @@ await page.locator(dynamic.button).click();
         await page.waitForTimeout(3000);
 })
 
-test("element visisble after some time test", async () => {
+test("element visisble after some time test", async ({page}) => {
+    try{
     await dynamic.elementVisibleAfterSomeTime();
     await expect(dynamic.page.locator(dynamic.visibleButton).isVisible()).toBe(true);
+    } catch (error) {
+         await page.screenshot({
+        path:'test-data//visisble.png',
+        fullPage:true
+    });
+
+    }
    
 })
-test("element enable after some time test", async () => {
-   
+test("element enable after some time test", async ({page}) => {
+   try{
     await dynamic.elementEnableAfterSometime();
     await expect( dynamic.page.locator(dynamic.enableButton).isVisible()).toBe(true);
+}
+catch(error){
+        await page.screenshot({
+        path:'test-data//enable.png',
+        fullPage:true
+    });
+}
    
 });
    
