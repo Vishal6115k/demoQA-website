@@ -141,6 +141,7 @@ test("dynamic elements", async ({page}) => {
 await page.locator(dynamic.button).click();
     await dynamic.dynamicEle("Click Me")
         await page.waitForTimeout(3000);
+        console.log("clicking")
      await dynamic.dynamicEle("Right Click Me")
      await page.waitForTimeout(3000);
       await dynamic.dynamicEle("Double Click Me")
