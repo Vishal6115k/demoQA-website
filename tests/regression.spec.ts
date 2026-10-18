@@ -6,6 +6,7 @@ import {Alerts} from "../pages/alerts";
 import {Frames} from "../pages/frames";
 import {Dates} from "../pages/dates";
 import{Dynamicelements} from "../pages/dynamicelements"
+import { booksstore } from "../pages/bookstore"
 
 
 let element:Elements;
@@ -15,6 +16,7 @@ let alert:Alerts;
 let frame:Frames;
 let dates:Dates;
 let dynamic:Dynamicelements;
+let bookstore:booksstore;
 
 test.beforeEach(async ({page}) => {
     element = new Elements(page);
@@ -24,6 +26,7 @@ test.beforeEach(async ({page}) => {
     frame = new Frames(page);
     dates = new Dates(page);
     dynamic = new Dynamicelements(page);
+    bookstore = new booksstore(page);
     await element.openUrl();
     
 });
@@ -141,6 +144,7 @@ test("dynamic elements", async ({page}) => {
 await page.locator(dynamic.button).click();
     await dynamic.dynamicEle("Click Me")
         await page.waitForTimeout(3000);
+        console.log("clicking")
      await dynamic.dynamicEle("Right Click Me")
      await page.waitForTimeout(3000);
       await dynamic.dynamicEle("Double Click Me")
@@ -172,5 +176,11 @@ catch(error){
     });
 }
    
+})
+
+test("login to bookstore", async ({page}) => {
+   // await bookstore.verifyPageLoaded();
+    await bookstore.loginToBookstore();
+    await expect(bookstore.page.url()).toBe("https://demoqa.com/login");
 });
    
