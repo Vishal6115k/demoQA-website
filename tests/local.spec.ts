@@ -31,9 +31,17 @@ test.beforeEach(async ({page}) => {
     
 });
 
+test ("register to bookstore Applicxation", async({page}) => {
+  //  await bookstore.verifyPageLoaded();
+    await bookstore.regisrterUser();
+    await expect(bookstore.page.url()).toBe("https://demoqa.com/register");
+});
+
 test("login to bookstore", async ({page}) => {
    // await bookstore.verifyPageLoaded();
     await bookstore.loginToBookstore();
     await expect(bookstore.page.url()).toBe("https://demoqa.com/login");
 });
+
+
    
